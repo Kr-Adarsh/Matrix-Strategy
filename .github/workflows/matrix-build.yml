@@ -1,0 +1,30 @@
+name: Matrix Build with Artifacts
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [14, 16, 18]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: matrix-fcee124
+      run: echo "Building for version ${{ matrix.version }}"
+
+    - name: Generate build artifact
+      run: echo "Build output for version ${{ matrix.version }}" > output.txt
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-fcee124-v${{ matrix.version }}
+        path: output.txt
